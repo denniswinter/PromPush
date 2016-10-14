@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Dew\\PromPush\\": "src/Dew/PromPush",
+      "Dew\\PromPush\\": "src/Dew/PromPush"
     }
   }
 }
