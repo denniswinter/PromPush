@@ -43,6 +43,29 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return $out;
     }
 
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testClient($url, $job, $group, $method, $data = null)
+    {
+        $mock = $this->getHttpClientMock($url, $job, $group, $method, $data);
+        $client = new Client($mock);
+
+        var_dump($client);
+
+        switch ($method) {
+            case 'delete':
+                $client->delete($job, $group);
+                break;
+            case 'put':
+                $client->set($data, $job, $group);
+                break;
+            case 'post':
+                $client->replace($data, $job, $group);
+                break;
+        }
+    }
+
     protected function getHttpClientMock($method, $url, $job, $group, $data = null)
     {
         $expectedUrl = "/metrics/job/{$job}";
@@ -67,27 +90,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $mock->expects($this->any())
                 ->method('request')
                 ->with($this->equalTo($method), $this->equalTo($expectedUrl));
-        }
-    }
-
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testClient($url, $job, $group, $method, $data = null)
-    {
-        $mock = $this->getHttpClientMock($url, $job, $group, $method, $data);
-        $client = new Client($mock);
-
-        switch ($method) {
-            case 'delete':
-                $client->delete($job, $group);
-                break;
-            case 'put':
-                $client->set($data, $job, $group);
-                break;
-            case 'post':
-                $client->replace($data, $job, $group);
-                break;
         }
     }
 }
