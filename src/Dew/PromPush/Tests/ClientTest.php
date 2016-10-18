@@ -14,6 +14,7 @@
 namespace Dew\PromPush\Tests;
 
 use Dew\PromPush\Client;
+use GuzzleHttp\Client as HttpClient;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,7 +43,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return $out;
     }
 
-    protected function getHttpClientMock($url, $job, $group, $method, $data = null)
+    protected function getHttpClientMock($method, $url, $job, $group, $data = null)
     {
         $expectedUrl = "/metrics/job/{$job}";
 
@@ -53,14 +54,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         }
         if ($data !== null) {
             $body = implode("\n", $data);
-            $mock = $this->getMockBuilder(\Dew\PromPush\Client::class)
+            $mock = $this->getMockBuilder(HttpClient::class)
                 ->setConstructorArgs(array($url))
                 ->getMock();
             $mock->expects($this->any())
                 ->method('request')
                 ->with($this->equalTo($method), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)));
         } else {
-            $mock = $this->getMockBuilder(\Dew\PromPush\Client::class)
+            $mock = $this->getMockBuilder(HttpClient::class)
                 ->setConstructorArgs(array($url))
                 ->getMock();
             $mock->expects($this->any())
@@ -74,6 +75,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testClient($url, $job, $group, $method, $data = null)
     {
-        $this->getHttpClientMock($url, $job, $group, $method, $data);
+        $mock = $this->getHttpClientMock($url, $job, $group, $method, $data);
+        $client = new Client($mock);
+
+        switch ($method) {
+            case 'delete':
+                $client->delete($job, $group);
+                break;
+            case 'put':
+                $client->set($data, $job, $group);
+                break;
+            case 'post':
+                $client->replace($data, $job, $group);
+                break;
+        }
     }
 }
