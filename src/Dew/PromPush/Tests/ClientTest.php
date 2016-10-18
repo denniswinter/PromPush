@@ -46,12 +46,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testClient($url, $job, $group, $method, $data = null)
+    public function testClient($method, $url, $job, $group, $data = null)
     {
-        $mock = $this->getHttpClientMock($url, $job, $group, $method, $data);
+        $mock = $this->getHttpClientMock($method, $url, $job, $group, $data);
         $client = new Client($mock);
-
-        var_dump($client);
 
         switch ($method) {
             case 'delete':
@@ -79,6 +77,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $body = implode("\n", $data);
             $mock = $this->getMockBuilder(HttpClient::class)
                 ->setConstructorArgs(array($url))
+                ->setMethods(array('request'))
                 ->getMock();
             $mock->expects($this->any())
                 ->method('request')
@@ -86,6 +85,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         } else {
             $mock = $this->getMockBuilder(HttpClient::class)
                 ->setConstructorArgs(array($url))
+                ->setMethods(array('request'))
                 ->getMock();
             $mock->expects($this->any())
                 ->method('request')
