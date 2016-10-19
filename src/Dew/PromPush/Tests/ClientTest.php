@@ -27,20 +27,37 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $job     = 'testJob';
         $group   = array('testGroup');
         $data    = array('test.metric_1 1', 'test.metric_2 1');
-        $out['should trigger put request'] = [$method, $url, $job, $group, $data];
+        $out['should trigger put request with group'] = [$method, $url, $job, $group, $data];
+
+        $method  = 'put';
+        $url     = 'http://localhost:9090';
+        $job     = 'testJob';
+        $data    = array('test.metric_1 1', 'test.metric_2 1');
+        $out['should trigger put request without group'] = [$method, $url, $job, null, $data];
 
         $method  = 'delete';
         $url     = 'http://localhost:9090';
         $job     = 'testJob';
         $group   = array('testGroup');
-        $out['should trigger delete request'] = [$method, $url, $job, $group];
+        $out['should trigger delete request with group'] = [$method, $url, $job, $group];
+
+        $method  = 'delete';
+        $url     = 'http://localhost:9090';
+        $job     = 'testJob';
+        $out['should trigger delete request without group'] = [$method, $url, $job, null];
 
         $method  = 'post';
         $url     = 'http://localhost:9090';
         $job     = 'testJob';
         $group   = array('testGroup');
         $data    = array('test.metric_1 1', 'test.metric_2 1');
-        $out['should trigger post request'] = [$method, $url, $job, $group, $data];
+        $out['should trigger post request with group'] = [$method, $url, $job, $group, $data];
+
+        $method  = 'post';
+        $url     = 'http://localhost:9090';
+        $job     = 'testJob';
+        $data    = array('test.metric_1 1', 'test.metric_2 1');
+        $out['should trigger post request without group'] = [$method, $url, $job, null, $data];
 
         return $out;
     }
@@ -48,7 +65,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testClient($method, $url, $job, $group, $data = null)
+    public function testClient($method, $url, $job, $group = null, $data = null)
     {
         $mock = $this->getHttpClientMock($method, $url, $job, $group, $data);
         $client = new Client($mock);
@@ -66,7 +83,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function getHttpClientMock($method, $url, $job, $group, $data = null)
+    protected function getHttpClientMock($method, $url, $job, $group = null, $data = null)
     {
         $expectedUrl = "/metrics/job/{$job}";
 

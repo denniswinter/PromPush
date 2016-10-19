@@ -64,7 +64,7 @@ class Client
      */
     public function delete($job, array $group = null)
     {
-        $this->doRequest('delete', $job, $group, null);
+        $this->doRequest('delete', $job, $group);
     }
 
     /**
