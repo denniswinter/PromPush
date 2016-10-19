@@ -89,6 +89,7 @@ class Client
             $reqOptions['body'] = $dataString;
         }
 
-        $this->httpClient->request(strtoupper($method), $url, $reqOptions);
+        $request = $this->httpClient->createRequest(strtoupper($method), $url, $reqOptions);
+        $this->httpClient->send($request);
     }
 }

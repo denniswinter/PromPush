@@ -13,6 +13,7 @@
 
 namespace PromPush\Tests;
 
+use GuzzleHttp\Message\Request;
 use PromPush\Client;
 use GuzzleHttp\Client as HttpClient;
 
@@ -95,20 +96,28 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         if ($data !== null) {
             $body = implode("\n", $data);
             $mock = $this->getMockBuilder(HttpClient::class)
-                ->setConstructorArgs(array(array('base_uri' => $url)))
-                ->setMethods(array('request'))
+                ->setConstructorArgs(array(array('base_url' => $url)))
+                ->setMethods(array('send', 'createRequest'))
                 ->getMock();
+            $request = $mock->expects($this->any())
+                ->method('createRequest')
+                ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)))
+                ->willReturn(Request::class);
             $mock->expects($this->any())
-                ->method('request')
-                ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)));
+                ->method('send')
+                ->with($request);
         } else {
             $mock = $this->getMockBuilder(HttpClient::class)
-                ->setConstructorArgs(array(array('base_uri' => $url)))
-                ->setMethods(array('request'))
+                ->setConstructorArgs(array(array('base_url' => $url)))
+                ->setMethods(array('send', 'createRequest'))
                 ->getMock();
+            $request = $mock->expects($this->any())
+                ->method('createRequest')
+                ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl))
+                ->willReturn(Request::class);
             $mock->expects($this->any())
-                ->method('request')
-                ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl));
+                ->method('send')
+                ->with($request);
         }
 
         return $mock;

@@ -18,7 +18,7 @@ Instantiate client using:
 ```php
 <?php
 $client = new PromPush\Client(new GuzzleHttp\Client([
-    'base_uri' => 'http://prometheus-pushgateway.example.com:9091']
+    'base_url' => 'http://prometheus-pushgateway.example.com:9091']
 ));
 ```
 
