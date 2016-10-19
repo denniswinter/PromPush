@@ -11,9 +11,9 @@
  * to winter@babymarkt.de so I can send you a copy immediately.
  */
 
-namespace Dew\PromPush\Tests;
+namespace PromPush\Tests;
 
-use Dew\PromPush\Client;
+use PromPush\Client;
 use GuzzleHttp\Client as HttpClient;
 
 class ClientTest extends \PHPUnit_Framework_TestCase

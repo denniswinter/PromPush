@@ -11,8 +11,8 @@
          bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="Dew PromPush">
-            <directory>./src/Dew/PromPush/Tests/</directory>
+        <testsuite name="PromPush">
+            <directory>./src/PromPush/Tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -20,7 +20,7 @@
         <whitelist>
             <directory>./src</directory>
             <exclude>
-                <directory>./src/Dew/PromPush/Tests/</directory>
+                <directory>./src/PromPush/Tests/</directory>
             </exclude>
         </whitelist>
     </filter>

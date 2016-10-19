@@ -11,7 +11,7 @@
  * to winter@babymarkt.de so I can send you a copy immediately.
  */
 
-namespace Dew\PromPush;
+namespace PromPush;
 
 use GuzzleHttp\Client as HttpClient;
 
