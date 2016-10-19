@@ -103,9 +103,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 ->method('createRequest')
                 ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)))
                 ->willReturn($this->getMockBuilder(Request::class)->setConstructorArgs(array($method, $expectedUrl, array('body' => $body)))->getMock());
-            $mock->expects($this->any())
-                ->method('send')
-                ->with($this->isInstanceOf($request));
         } else {
             $mock = $this->getMockBuilder(HttpClient::class)
                 ->setConstructorArgs(array(array('base_url' => $url)))
@@ -115,9 +112,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 ->method('createRequest')
                 ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl))
                 ->willReturn($this->getMockBuilder(Request::class)->setConstructorArgs(array($method, $expectedUrl))->getMock());
-            $mock->expects($this->any())
-                ->method('send')
-                ->with($this->isInstanceOf($request));
         }
 
         return $mock;
