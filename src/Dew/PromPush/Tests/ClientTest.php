@@ -23,22 +23,24 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $out = [];
 
         $method  = 'put';
-        $url     = 'localhost:9090';
+        $url     = 'http://localhost:9090';
         $job     = 'testJob';
         $group   = array('testGroup');
         $data    = array('test.metric_1 1', 'test.metric_2 1');
         $out['should trigger put request'] = [$method, $url, $job, $group, $data];
+
         $method  = 'delete';
-        $url     = 'localhost:9090';
+        $url     = 'http://localhost:9090';
         $job     = 'testJob';
         $group   = array('testGroup');
-        $out['should trigger delete request'] = [];
+        $out['should trigger delete request'] = [$method, $url, $job, $group];
+
         $method  = 'post';
-        $url     = 'localhost:9090';
+        $url     = 'http://localhost:9090';
         $job     = 'testJob';
         $group   = array('testGroup');
         $data    = array('test.metric_1 1', 'test.metric_2 1');
-        $out['should trigger post request'] = [];
+        $out['should trigger post request'] = [$method, $url, $job, $group, $data];
 
         return $out;
     }

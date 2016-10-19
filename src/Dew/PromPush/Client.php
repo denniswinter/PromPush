@@ -89,6 +89,6 @@ class Client
             $reqOptions['body'] = $dataString;
         }
 
-        $this->getHttpClient()->request(strtoupper($method), $url, $reqOptions);
+        $this->httpClient->request(strtoupper($method), $url, $reqOptions);
     }
 }
