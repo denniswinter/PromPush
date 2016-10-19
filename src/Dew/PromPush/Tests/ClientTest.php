@@ -93,5 +93,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 ->method('request')
                 ->with($this->equalTo($method), $this->equalTo($expectedUrl));
         }
+
+        return $mock;
     }
 }
