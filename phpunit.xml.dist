@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="Dew PromPush">
-            <directory>./src/Dem/PromPush/Tests/</directory>
+            <directory>./src/Dew/PromPush/Tests/</directory>
         </testsuite>
     </testsuites>
 
