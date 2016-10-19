@@ -41,7 +41,7 @@ class Client
      */
     public function set(array $data, $job, array $group = null)
     {
-        $this->doRequest($data, $job, $group, 'put');
+        $this->doRequest('put', $job, $group, $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class Client
      */
     public function replace(array $data, $job, array $group = null)
     {
-        $this->doRequest($data, $job, $group, 'post');
+        $this->doRequest('post', $job, $group, $data);
     }
 
     /**
@@ -64,16 +64,16 @@ class Client
      */
     public function delete($job, array $group = null)
     {
-        $this->doRequest(null, $job, $group, 'delete');
+        $this->doRequest('delete', $job, $group, null);
     }
 
     /**
-     * @param array  $data
-     * @param string $job
-     * @param array  $group
-     * @param string $method
+     * @param string     $method
+     * @param string     $job
+     * @param array      $group
+     * @param array|null $data
      */
-    protected function doRequest(array $data, $job, $group, $method)
+    protected function doRequest($method, $job, $group, array $data = null)
     {
         $url = "/metrics/job/{$job}";
 
