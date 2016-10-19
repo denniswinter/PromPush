@@ -102,7 +102,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $request = $mock->expects($this->any())
                 ->method('createRequest')
                 ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)))
-                ->willReturn($this->getMock(Request::class));
+                ->willReturn($this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock());
             $mock->expects($this->any())
                 ->method('send')
                 ->with($request);
@@ -114,7 +114,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $request = $mock->expects($this->any())
                 ->method('createRequest')
                 ->with($this->equalTo(strtoupper($method)), $this->equalTo($expectedUrl))
-                ->willReturn($this->getMock(Request::class));
+                ->willReturn($this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock());
             $mock->expects($this->any())
                 ->method('send')
                 ->with($request);
