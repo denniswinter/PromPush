@@ -78,7 +78,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         if ($data !== null) {
             $body = implode("\n", $data);
             $mock = $this->getMockBuilder(HttpClient::class)
-                ->setConstructorArgs(array($url))
+                ->setConstructorArgs(array(array('base_url' => $url)))
                 ->setMethods(array('request'))
                 ->getMock();
             $mock->expects($this->any())
