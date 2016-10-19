@@ -86,7 +86,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 ->with($this->equalTo($method), $this->equalTo($expectedUrl), $this->equalTo(array('body'=>$body)));
         } else {
             $mock = $this->getMockBuilder(HttpClient::class)
-                ->setConstructorArgs(array($url))
+                ->setConstructorArgs(array(array('base_url' => $url)))
                 ->setMethods(array('request'))
                 ->getMock();
             $mock->expects($this->any())
